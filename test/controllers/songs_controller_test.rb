@@ -24,8 +24,14 @@ class SongsControllerTest < ActionDispatch::IntegrationTest
     assert_equal ["title", "album", "artist", "year"], data.keys
   end
 
-  
+  test "update" do
+    song = Song.first
+    patch "/songs/#{song.id}.json", params: { title: "Updated title" }
+    assert_response 200
 
+    data = JSON.parse(response.body)
+    assert_equal "Updated title", data["title"]
+  end
    
   
 
